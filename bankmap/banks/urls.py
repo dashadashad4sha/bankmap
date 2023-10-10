@@ -1,6 +1,6 @@
 from django.urls import path, include
 from banks import admin
-from banks.views import BankAPIView, BankData, WorkloadAPIView, TypesAPIView, FilteredListView
+from banks.views import BankAPIView, BankData, WorkloadAPIView, TypesAPIView, FilteredListView, SearchView
 
 urlpatterns = [
     path('bankslist/', BankAPIView.as_view()),
@@ -9,6 +9,7 @@ urlpatterns = [
     path('workload/', WorkloadAPIView.as_view()),
     path('types/', TypesAPIView.as_view()),
 
-    path('filteredbanklist', FilteredListView.as_view()),
+    path('filteredbanklist/', FilteredListView.as_view()),
+    path('search/', SearchView.as_view())
 
 ]

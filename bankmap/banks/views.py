@@ -2,6 +2,7 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from django.shortcuts import render
+from rest_framework import filters
 
 from banks.models import Bank, Workload, Types
 from banks.serializers import BankSerializer, WorkloadSerializer, TypesSerializer
@@ -106,3 +107,16 @@ class FilteredListView(generics.ListAPIView):
                     queryset = queryset.filter(for_lm=True)
 
         return queryset
+
+
+class SearchView(generics.ListAPIView):
+    """Поиск (по полям Заголовок и Адрес)
+
+    В get передается search=строка поиска
+
+    """
+
+    queryset = Bank.objects.all()
+    serializer_class = BankSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['$title', '$address']

@@ -1,10 +1,7 @@
-
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -16,7 +13,6 @@ SECRET_KEY = 'django-insecure-vg-ya)t^y1**ur(#bc&+2^f@og6z52ivw4&utjs+u5%1&x4rhh
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -31,6 +27,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'corsheaders',
+    'django_filters',
 
     'banks.apps.BanksConfig',
 ]
@@ -66,7 +63,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bankmap.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
@@ -77,14 +73,12 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     # Задолбалась придумывать подходящие пароли, поэтому никаких больше валидаторов паролей
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -96,7 +90,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -117,3 +110,7 @@ CORS_ORIGIN_WHITELIST = [
     "http://localhost:5500",
     "http://localhost:8000",
 ]
+
+TIME_FORMAT = '%H:%M'
+TIME_INPUT_FORMATS = ['%H:%M']
+DATETIME_FORMAT = 'Y-m-d H:M'
