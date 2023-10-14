@@ -35,5 +35,16 @@ class Bank(models.Model):
     workload = models.ForeignKey('Workload', default=3, on_delete=models.PROTECT, null=True, verbose_name="Статус загруженности")
     type = models.ForeignKey('Types', on_delete=models.PROTECT, null=True, verbose_name="Тип точки")
 
+    total_views = models.IntegerField(default=0)
+    total_get_rout = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title
+
+    def counter(self):
+        # self.objects.update(total_views=self.total_views + 1)
+        print(self.total_views)
+        self.total_views += 1
+        print(self.total_views)
+        self.save()
+

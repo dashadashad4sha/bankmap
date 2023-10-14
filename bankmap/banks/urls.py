@@ -1,7 +1,7 @@
 from django.urls import path, include
 from banks import admin
 from banks.views import BankAPIView, BankData, WorkloadAPIView, TypesAPIView, FilteredListView, SearchView, \
-    BankAPICoords, FilteredListViewCoord
+    BankAPICoords, FilteredListViewCoord, ButtonGetRoutCount, UpdateWorkload
 
 urlpatterns = [
     path('bankslist/', BankAPIView.as_view()),
@@ -15,5 +15,8 @@ urlpatterns = [
 
     path('bankslist_coord/', BankAPICoords.as_view()),
     path('filteredbanklist_coord/', FilteredListViewCoord.as_view()),
+
+    path('button_get_pressed/', ButtonGetRoutCount.as_view()),
+    path('update_workload/', UpdateWorkload.as_view())
 
 ]

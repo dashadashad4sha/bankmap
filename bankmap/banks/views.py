@@ -3,9 +3,11 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics
 from django.shortcuts import render
 from rest_framework import filters
+from rest_framework.views import APIView
 
 from banks.models import Bank, Workload, Types
 from banks.serializers import BankSerializer, WorkloadSerializer, TypesSerializer
+from rest_framework.response import Response
 
 
 class BankAPIView(generics.ListAPIView):
@@ -22,6 +24,12 @@ class BankData(generics.RetrieveAPIView):
     Вывод информации об отделении по индексу"""
     queryset = Bank.objects.all()
     serializer_class = BankSerializer
+
+    def get_object(self):
+        obj = super().get_object()
+        print("gooo")
+        obj.counter()
+        return obj
 
 
 class WorkloadAPIView(generics.ListAPIView):
@@ -244,3 +252,47 @@ class FilteredListViewCoord(generics.ListAPIView):
             queryset = queryset.filter(workload=workload)
 
         return queryset
+
+
+class ButtonGetRoutCount(APIView):
+    """Подсчёт количества построений маршрута
+
+       Передается id
+
+       Пример запроса:
+
+       http://127.0.0.1:8000/api/button_get_pressed/?id=17
+    """
+
+    def post(self, request):
+        id = request.query_params.get('id')
+        button = Bank.objects.get(id=id)
+        button.total_get_rout += 1
+        button.save()
+        serializer = BankSerializer(button)
+        return Response(serializer.data)
+
+
+class UpdateWorkload(APIView):
+    """Обновление загруженности отделений
+
+       Выполняется каждые полчаса, чтобы на основе данных за
+       прошедшие почаса обновить данные о загруженности отделений.
+    """
+
+    def update_workload(self):
+        for obj in Bank.objects.all():
+            if obj.total_views >= 20 and obj.total_get_rout >= 5:
+                obj.workload_id = 1
+            elif obj.total_views >= 10:
+                obj.workload_id = 2
+            else:
+                obj.workload_id = 3
+            obj.total_views = 0
+            obj.total_get_rout = 0
+            obj.save()
+
+    def post(self, request):
+        self.update_workload()
+        serializer = BankSerializer()
+        return Response(serializer.data)
