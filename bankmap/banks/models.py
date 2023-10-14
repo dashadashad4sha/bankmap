@@ -32,7 +32,7 @@ class Bank(models.Model):
     for_visually_impaired = models.BooleanField(default=False, verbose_name="Оборудован для слабовидящих")
     for_lm = models.BooleanField(default=False, verbose_name="Оборудован для маломобильных граждан")
 
-    workload = models.ForeignKey('Workload', on_delete=models.PROTECT, null=True, verbose_name="Статус загруженности")
+    workload = models.ForeignKey('Workload', default=3, on_delete=models.PROTECT, null=True, verbose_name="Статус загруженности")
     type = models.ForeignKey('Types', on_delete=models.PROTECT, null=True, verbose_name="Тип точки")
 
     def __str__(self):

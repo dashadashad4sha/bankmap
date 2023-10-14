@@ -54,6 +54,8 @@ class FilteredListView(generics.ListAPIView):
     for_visually_impaired,
     for_lm,
 
+    Отдельно можно передать значение для атрибута type и workload
+
     Пример: http://127.0.0.1:8000/api/filteredbanklist?for_visually_impaired=True&put_rubles=False&withdraw_qr=True
     """
     serializer_class = BankSerializer
@@ -72,6 +74,9 @@ class FilteredListView(generics.ListAPIView):
         qr_payment = self.request.query_params.get('qr_payment')
         for_visually_impaired = self.request.query_params.get('for_visually_impaired')
         for_lm = self.request.query_params.get('for_lm')
+
+        type = self.request.query_params.get('type')
+        workload = self.request.query_params.get('workload')
 
         parameters_list = {"withdraw_rubles": withdraw_rubles,
                            "put_rubles": put_rubles,
@@ -105,6 +110,12 @@ class FilteredListView(generics.ListAPIView):
 
                 elif k == "for_lm":
                     queryset = queryset.filter(for_lm=True)
+
+        if not type is None:
+            queryset = queryset.filter(type=type)
+
+        if not workload is None:
+            queryset = queryset.filter(workload=workload)
 
         return queryset
 
