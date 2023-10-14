@@ -23,7 +23,7 @@
 4) Анализ загруженности отделений (см. п. 1)
 5) Киллер фича - необычная стилистика проекта и игра (см. п. 2)
 
-Стек технологий - Django Rest Framework + React
+Стек технологий - Django Rest Framework + React + Mapbox + itch.io
 
 ### п. 1 Анализ загруженности отделений
 
@@ -77,3 +77,10 @@
     ```http-server```
 
 10) Перейдите на сайт your_localhost_server/index.html
+
+
+### Приложение
+
+Ссылка на дизайн-проект:
+
+https://www.figma.com/file/FmRzsXshfCUr6BtmPcYGhF/Untitled?type=design&node-id=0-1&mode=design&t=zFD8VfxAsGBJNqqa-0
