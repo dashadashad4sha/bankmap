@@ -155,7 +155,9 @@ class BankAPICoords(generics.ListAPIView):
 
 
 class FilteredListViewCoord(generics.ListAPIView):
-    """Фильтрация.
+    """Фильтрация с координатами.
+
+    параметры latitude longitude обязательны
 
     В GET передаются True/False у полей
 
