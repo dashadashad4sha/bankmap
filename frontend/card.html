@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+  
+  <link rel="stylesheet" href="stylesheets/general.css">
+  <link rel="stylesheet" href="stylesheets/card.css">
+
+</head>
+
+<body>
+  <div class="header">
+    <img href="index.html" src='pictures/VTB_logo-add_ru_rgb.png' alt="ВТБ" class="VTB-icon">
+    <a>Все отделения</a>
+    <a href="navigation.html">Маршрут</a>
+    <a href="______________________________.html">
+      <button class="game-button">Начать игру</button>
+    </a>
+  </div>
+
+  <div class="filters">
+    <div class="top">
+      <p class="title-1">Фильтры</p>
+      <button class="filter-button js-filter-button">Найти</button>
+    </div>
+
+    <div class="checkbox-container">
+      <div class="checkbox">
+        <input class="js-checkbox-put_rubles" type="checkbox">
+        <label for="js-checkbox-put_rubles">Возможность пополнить счёт наличными рублями</label>
+      </div>
+      <div class="checkbox">
+        <input class="js-checkbox-withdraw_rubles" type="checkbox">
+        <label for="js-checkbox-withdraw_rubles">Возможность снять со счёта наличные рубли</label>
+      </div>
+    </div>
+    <div class="checkbox-container">
+      <div class="checkbox">
+        <input class="js-checkbox-qr_payment" type="checkbox">
+        <label for="js-checkbox-qr_payment">Возможность совершать операции по QR коду</label>
+      </div>
+      <div class="checkbox">
+        <input class="js-checkbox-withdraw_qr" type="checkbox">
+        <label for="js-checkbox-withdraw_qr">Возможность снять наличные по QR коду</label>
+      </div>
+    </div>
+    <div class="checkbox-container">
+      <div class="checkbox">
+        <input class="js-checkbox-nfc" type="checkbox">
+        <label for="js-checkbox-nfc">Возможность оплаты по NFC</label>
+      </div>
+      <div class="checkbox">
+        <input class="js-checkbox-for_visually_impaired" type="checkbox">
+        <label for="js-checkbox-for_visually_impaired"> Оборудован для слабовидящих</label>
+      </div>
+      <div class="checkbox">
+        <input class="js-checkbox-for_lm" type="checkbox">
+        <label for="js-checkbox-for_lm">Оборудован для маломобильных граждан</label>
+      </div>
+    </div>
+    <div class="checkbox-container">
+      <div class="checkbox">
+        <label for="js-input-type">Тип баковской точки:</label>
+        <select class="input-type js-input-type">
+          <option value="empty">-</option>
+          <option value="atm">банкомат</option>
+          <option value="office">отделение</option>
+        </select>
+      </div>
+
+      <div class="checkbox">
+        <label for="js-input-workload">Загруженность отделения:</label>
+        <select class="input-workload js-input-workload">
+          <option value="low">Низкая загруженность</option>
+          <option value="medium">Средняя загруженность</option>
+          <option value="high">Высокая загруженность</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="active-zone"></div>
+
+  <script>
+    //const url='http://127.0.0.1:8000/api/banklist';
+
+    /*displayAllCards();
+
+    function displayAllCards() {
+      fetch(url)
+      .then(response => response.json())
+      .then(data => displayCard(data))
+      .catch((error) => console.error('Error:', error));
+    };*/
+
+
+
+    //let filter_url = 'http://127.0.0.1:8000/api/filteredbanklist?/';
+    const setFilter = document.querySelector('.js-filter-button');
+    setFilter.addEventListener("click", () => {
+      let url = 'http://127.0.0.1:8000/api/filteredbanklist_coord/?latitude=55.419247&longitude=37.570042&://127.0.0.1:8000/api/filteredbanklist?/';
+      let put_rubles = document.querySelector('.js-checkbox-put_rubles').checked;
+      if (put_rubles === true) {
+        url += 'put_rubles=True&';
+      }
+
+      let withdraw_rubles = document.querySelector('.js-checkbox-withdraw_rubles').checked;
+      if (withdraw_rubles === true) {
+        url += 'withdraw_rubles=True&';
+      }
+
+      let nfc = document.querySelector('.js-checkbox-nfc').checked;
+      if (nfc === true) {
+        url += 'nfc=True&';
+      }
+
+      let withdraw_qr = document.querySelector('.js-checkbox-withdraw_qr').checked;
+      if (withdraw_qr === true) {
+        url += 'withdraw_qr=True&';
+      }
+
+      let qr_payment = document.querySelector('.js-checkbox-qr_payment').checked;
+      if (qr_payment === true) {
+        url += 'qr_payment=True&';
+      }
+
+      let for_visually_impaired = document.querySelector('.js-checkbox-for_visually_impaired').checked;
+      if (for_visually_impaired === true) {
+        url += 'for_visually_impaired=True&';
+      }
+
+      let for_lm = document.querySelector('.js-checkbox-for_lm').checked;
+      if (for_lm === true) {
+        url += 'for_lm=True&';
+      }
+
+      let type = document.querySelector('.js-input-type').value;
+      if (type === 'atm') {
+        url += 'type=1&';
+      } else if (type === 'office') {
+        url += 'type=2&';
+      }
+
+      let workload = document.querySelector('.js-input-workload').value;
+      if (workload === 'low') {
+        url += 'workload=3&';
+      } else if (workload === 'medium') {
+        url += 'workload=2&';
+      } else if (workload === 'high') {
+        url += 'workload=1&';
+      }
+
+      document.querySelector('.active-zone')
+        .innerHTML = '';
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => { displayCard(data); console.log(url); })
+        .catch((error) => console.error('Error:', error));
+    });
+
+    function displayCard(data) {
+      data.forEach((array) => {
+        const title = array.title;
+        let type = array.type;
+        const address = array.address;
+        const openTime = array.start_time;
+        const closeTime = array.end_time;
+        let workload = array.workload;
+
+        let withdrawRubles = array.withdraw_rubles;
+        let putRubles = array.put_rubles;
+        let nfc = array.nfc;
+        let withdrawQr = array.withdraw_qr;
+        let qrPayment = array.qr_payment;
+        let forVisuallyImpaired = array.for_visually_impaired;
+        let forLm = array.for_lm;
+
+        const photo = array.photo;
+
+        if (withdrawRubles === true) {
+          withdrawRubles = 'Можно';
+        } else if (withdrawRubles === false) {
+          withdrawRubles = "Нельзя";
+        }
+        if (putRubles === true) {
+          putRubles = "Можно";
+        } else if (putRubles === false) {
+          putRubles = "Нельзя";
+        }
+        if (nfc === true) {
+          nfc = "Можно";
+        } else if (nfc === false) {
+          nfc = "Нельзя";
+        }
+        if (withdrawQr === true) {
+          withdrawQr = 'Можно';
+        } else if (withdrawQr === false) {
+          withdrawQr = "Нельзя";
+        }
+        if (qrPayment === true) {
+          qrPayment = "Можно";
+        } else if (qrPayment === false) {
+          qrPayment = "Нельзя";
+        }
+        if (forVisuallyImpaired === true) {
+          forVisuallyImpaired = "О";
+        } else if (forVisuallyImpaired === false) {
+          forVisuallyImpaired = "Не о";
+        }
+        if (forLm === true) {
+          forLm = "О";
+        } else if (forLm === false) {
+          forLm = "Не о";
+        }
+
+        if (type === '1') {
+          type = 'Банкомат';
+        } else if (type === '2') {
+          type = 'Отделение';
+        }
+        if (workload === 3) {
+          workload = 'Малая';
+        } else if (workload === 2) {
+          workload = 'Средняя';
+        } else if (workload === 1) {
+          workload = 'Сильная';
+        }
+
+        const html = `
+            <div class="card">
+              <img class="card-photo" src="${photo}">
+              <div>${type} ${title}</div>
+              <div>${address}</div>
+              <div>Работает с ${openTime}</div>
+              <div>Работает до ${closeTime}</div>
+              <div>
+                <div>${withdrawRubles} положить деньги на депозит наличными</div>
+                <div>${putRubles} снять деньги с депозита наличными</div>
+                <div>${nfc} оплатить по NFC</div>
+                <div>${withdrawQr} снять наличные по QR коду</div>
+                <div>${qrPayment} снять наличные по QR коду</div>
+                <div>${forVisuallyImpaired}борудован для слабовидящих</div>
+                <div>${forLm}борудован для маломобильных граждан</div>
+              </div>
+              <div>${workload} загруженность</div>
+              <a href="navigation.html">
+                <button class="navigate-button">Построить мрашрут</button>
+              </a>
+            </div>
+          `;
+        document.querySelector('.active-zone')
+          .innerHTML += html;
+      });
+    };
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,122 @@
+body{
+  background-color: #878787;
+}
+.filters{
+  background-color: #D9D9D9;
+  color: #58595b;
+  font-size: 24px;
+  font-family: Pixel Anchor-Jack;
+  position: relative;
+  top: -24px;
+  padding: 8px 56px 16px 56px;
+  gap: 24px;
+  border-bottom: #002882 solid 18px;
+}
+.active-zone{
+  display: grid; 
+  grid-template-columns: auto auto auto; 
+  justify-content: space-around;
+  margin-bottom: 50px;
+}
+
+.game-button{
+  background-color: #ffffff;
+  color: #002882;
+  font-family: Pixel Anchor-Jack;
+  border-radius: 20px;
+  border-color: #33549b;
+  border-style: dashed;
+  padding: 8px 16px;
+  margin: 16px 0;
+  align-self: center;
+  transition: hover 3s active 1s;
+}
+.game-button:hover{
+  background-color: #99a9cd;
+}
+.game-button:active{
+  background-color: #e5f6ff;
+  color: #677eb4;
+  border-color: #e5f6ff;
+}
+
+
+.top{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.filter-button{
+  background-color: #33549b;
+  color: #e5f6ff;
+  font-family: Pixel Anchor-Jack;
+  border-radius: 20px;
+  border-color: #002882;
+  border-style: dashed;
+  padding: 8px 16px;
+  margin: 16px 0;
+  align-self: center;
+  transition: hover 3s active 1s;
+}
+.filter-button:hover{
+  background-color: #99a9cd;
+}
+.filter-button:active{
+  background-color: #e5f6ff;
+  color: #677eb4;
+  border-color: #e5f6ff;
+}
+.checkbox-container{
+  display: flex;
+  color: #002882;
+  font-family: Undertale Battle Font;
+}
+.checkbox{
+  color: #3B5899;
+  font-family: Undertale Battle Font;
+  margin: 5px 32px 5px 0px;
+}
+.checkbox select{
+  background-color: #ffffff;
+  color: #4f5051;
+  font-family: Undertale Battle Font;
+  width: auto;
+  border-radius: 5px;
+}
+
+.card{
+  display: flex; 
+  flex-direction: column; 
+  align-items: start; 
+  background-color: #58595b;
+  color: #ffffff;
+  font-family: Undertale Battle Font;
+  width: 450px;
+  border: white solid 2px;
+  padding: 15px;
+  gap: 8px;
+}
+.card-photo{
+  object-fit: cover; 
+  width: 100%;
+}
+.navigate-button{
+  background-color: #33549b;
+  color: #e5f6ff;
+  font-family: Pixel Anchor-Jack;
+  border-radius: 20px;
+  border-color: #002882;
+  border-style: dashed;
+  padding: 8px 16px;
+  margin: 16px 0;
+  align-self: center;
+  transition: hover 3s active 1s;
+}
+.navigate-button:hover{
+  background-color: #99a9cd;
+}
+.navigate-button:active{
+  background-color: #e5f6ff;
+  color: #677eb4;
+  border-color: #e5f6ff;
+}

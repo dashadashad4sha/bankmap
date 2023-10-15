@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/general.css">
+    <link rel="stylesheet" href="stylesheets/navigation.css">
+  </head>
+  <body>
+    <script
+        src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+        type="text/css">
+
+    <div class="header">
+      <a href="index.html">
+        <img src='pictures/VTB_logo-add_ru_rgb.png' alt="ВТБ" class="VTB-icon">
+      </a>
+      <a href="card.html">Все отделения</a>
+      <a>Маршрут</a>     
+    </div>
+
+    <div class="active-zone">
+      <div class="map-zone">
+        <div class="map-container">
+          <div id="map"></div>
+          <img class="close-icon" src="pictures/close.svg">
+        </div>
+        <div class="map-back-1"></div>
+        <div class="map-back-2"></div>
+      </div>
+
+      <div class="sidebar">
+        <div class="type-container">
+          <div class="type-paragraph js-type-paragraph"></div>
+          <img src="pictures/VTB_logo-add_ru_rgb.png" alt="ВТБ" class="VTB-icon">
+        </div>
+
+        <div class="address js-address"></div>
+        
+        <div class="working-hours">
+          <p class="title">ОТКРЫТО</p>
+          <div class="hours">
+            <div class="start_time js-start-time"></div>
+            <div class="end-time js-end-time"></div>
+          </div>
+        </div>
+
+        <div class="filters">
+          
+          <div class="checkbox">
+            <div class="js-checkbox-put_rubles">Возможность пополнить счёт наличными рублями</div>
+            <div class="js-checkbox-withdraw_rubles">Возможность снять со счёта наличные рубли</div>
+            <div class="js-checkbox-qr_payment">Возможность совершать операции по QR коду</div>
+            <div class="js-checkbox-withdraw_qr">Возможность снять наличные по QR коду</div>
+            <div class="js-checkbox-nfc">Возможность оплаты по NFC</div>
+            <div class="js-checkbox-for_visually_impaired">	Оборудован для слабовидящих</div>
+            <div class="js-checkbox-for_lm">Оборудован для маломобильных граждан</div>
+          </div>
+        </div>
+
+        <div class="checkbox" style="margin: 0 16px 0 30px;">
+          <label for="js-input-workload">Загруженность отделения:</label>
+          <select class="input-workload js-input-workload" disabled>
+            <option value="low">Низкая загруженность</option>
+            <option value="medium">Средняя загруженность</option>
+            <option value="high">Высокая загруженность</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts/navigation.js"></script>
+    <script>
+      let id = 15;
+      let url = `http://127.0.0.1:8000/api/onebank/${id}`;
+
+      BuildNavigation(url);
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => insertData(data))
+        .catch((error) => console.error('Error:', error));
+
+      function insertData(data){      
+        const type = data.type;
+        const address = data.address;
+        const startTime = data.start_time;
+        const endTime = data.end_time;
+
+        const withdrawRubles = data.withdraw_rubles;
+        const putRubles = data.put_rubles;
+        const nfc = data.nfc;
+        const withdrawQr = data.withdraw_qr;
+        const qrPayment = data.qr_payment;
+        const forVisuallyImpaired = data.for_visually_impaired;
+        const forLm = data.for_lm;
+
+        const workload = data.workload;    
+
+        if (withdrawRubles === true) {
+          document.querySelector('.js-checkbox-withdraw_rubles').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-withdraw_rubles').id  = 'unchecked';
+        }
+        if (putRubles === true) {
+          document.querySelector('.js-checkbox-put_rubles').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-put_rubles').id  = 'unchecked';
+        }
+        if (nfc === true) {
+          document.querySelector('.js-checkbox-nfc').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-nfc').id  = 'unchecked';
+        }
+        if (withdrawQr === true) {
+          document.querySelector('.js-checkbox-withdraw_qr').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-withdraw_qr').id  = 'unchecked';
+        }
+        if (qrPayment === true) {
+          document.querySelector('.js-checkbox-qr_payment').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-qr_payment').id  = 'unchecked';
+        }
+        if (forVisuallyImpaired === true) {
+          document.querySelector('.js-checkbox-for_visually_impaired').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-for_visually_impaired').id  = 'unchecked';
+        }
+        if (forLm === true) {
+          document.querySelector('.js-checkbox-for_lm').id = 'checked';
+        } else {
+          document.querySelector('.js-checkbox-for_lm').id  = 'unchecked';
+        }
+
+        if (workload === 3) {
+          document.querySelector('.js-input-workload').value = 'low';
+        } else if (workload === 2) {
+          document.querySelector('.js-input-workload').value = 'medium';
+        } else if (workload === 1) {
+          document.querySelector('.js-input-workload').value = 'high';
+        }
+
+        document.querySelector('.js-type-paragraph').innerHTML = type;
+        document.querySelector('.js-address').innerHTML = address; 
+        document.querySelector('.js-start-time').innerHTML = `C ${startTime}`; 
+        document.querySelector('.js-end-time').innerHTML = `До ${endTime}`; 
+        
+        if (type === 1) {
+          document.querySelector('.js-type-paragraph').innerHTML = 'БАНКОМАТ';
+        } else if (type === 2){
+          document.querySelector('.js-type-paragraph').innerHTML = 'ОТДЕЛЕНИЕ';
+        }
+      };      
+    </script>
+  </body>
+</html>

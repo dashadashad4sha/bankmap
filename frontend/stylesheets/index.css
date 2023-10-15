@@ -1,0 +1,131 @@
+.active-zone{
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+}
+.filtration-zone{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.map-zone{
+  height: 600px;
+}
+
+
+.title-1{
+  color: #e5f6ff;
+  font-family: Pixel Anchor-Jack;
+}
+
+.search-bar{
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+}
+.input{
+  background-color: #c5c7c8;
+  color: #002882;
+  font-size: 24px;
+  font-family: Undertale Battle Font;
+  border: none;
+  width: 470px;
+  height: 50px;
+  text-align: center;
+}
+.search-button{
+  background-color: #c5c7c8;
+  border: none;
+  height: 100%;
+}
+.search-icon{
+  object-fit: contain;
+  height: 40px;
+}
+
+.filters{
+  display: flex;
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: start;
+  background-color: #c5c7c8;
+}
+.title-2{
+  color: #4f5051;
+  font-family: Pixel Anchor-Jack;
+  margin: 24px 0 40px 24px;
+}
+.checkbox{
+  color: #4f5051;
+  font-family: Undertale Battle Font;
+  margin: 0 0 16px 40px;
+}
+.checkbox select{
+  background-color: #ffffff;
+  color: #4f5051;
+  font-family: Undertale Battle Font;
+  width: auto;
+  border-radius: 5px;
+}
+.filter-button{
+  background-color: #33549b;
+  color: #e5f6ff;
+  font-family: Pixel Anchor-Jack;
+  border-radius: 20px;
+  border-color: #002882;
+  border-style: dashed;
+  padding: 8px 16px;
+  margin: 16px 0;
+  align-self: center;
+  transition: hover 3s active 1s;
+}
+.filter-button:hover{
+  background-color: #99a9cd;
+}
+.filter-button:active{
+  background-color: #e5f6ff;
+  color: #677eb4;
+  border-color: #e5f6ff;
+}
+
+
+.map-container{
+  display: flex; 
+  width: 550px; 
+  height: 550px;
+  background-color: #58595b;
+  position: relative;
+  bottom: -60px;
+}
+#map {
+  display: flex; 
+  width: 100%; 
+  height: 500px;
+  margin: auto 15px 10px 15px;
+}
+.close-icon{
+  position: absolute;
+  width: 25px;
+  top: 8px;
+  right: 10px;
+}
+.map-back-1{
+  display: flex; 
+  width: 550px; 
+  height: 550px;
+  background-color: #99a9cd;
+  position: relative;
+  top: -500px;
+  right: -15px;
+  z-index: -5;
+}
+.map-back-2{
+  display: flex; 
+  width: 550px; 
+  height: 550px;
+  background-color: #c5c7c8;
+  position: relative;
+  top: -1060px;
+  right: -25px;
+  z-index: -10;
+}

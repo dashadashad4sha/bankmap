@@ -1,0 +1,39 @@
+@font-face {
+  font-family: Undertale Battle Font;
+  src: url("Undertale-Battle-Font.ttf");
+}
+
+@font-face {
+  font-family: Pixel Anchor-Jack;
+  src: url("pixel-anchor-jack_0.ttf");
+}
+
+
+
+body {
+  background-color: #667eb4;
+  margin: 0;
+}
+
+.header{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+  gap: 72px;
+  background-color: #33549b;
+  color: #ffffff;
+  font-size: 16pt;
+  font-family: Pixel Anchor-Jack; 
+  margin-bottom: 24px;
+  padding-left: 40px;
+  height: 80px;
+}
+.header a{
+  color: #ffffff;
+  text-decoration: none ;
+}
+.VTB-icon{
+  object-fit: contain;
+  height: 100%;
+}

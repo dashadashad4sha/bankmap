@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/general.css">
+    <link rel="stylesheet" href="stylesheets/index.css">
+  </head>
+  <body> 
+    <div>
+      <div class="header">
+        <img src='pictures/VTB_logo-add_ru_rgb.png' alt="ВТБ" class="VTB-icon">
+        <a href="card.html">Все отделения</a>
+        <a  href="navigation.html">Маршрут</a>     
+      </div>
+      
+      <div class="active-zone">
+        <div class="filtration-zone">
+          <p class="title-1">Отделения и банкоматы</p>
+          <div class="search-bar">
+            <input class="input js-input" type="text" placeholder="Поиск отделения">
+            <button class="search-button js-search-button">
+              <img class="search-icon" src="pictures/search.svg">
+            </button>
+          </div>
+          <div class="filters">
+            <p class="title-2">Фильтры</p>
+
+            <div class="checkbox">
+              <input class="js-checkbox-put_rubles" type="checkbox">
+              <label for="js-checkbox-put_rubles">Возможность пополнить счёт наличными рублями</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-withdraw_rubles" type="checkbox">
+              <label for="js-checkbox-withdraw_rubles">Возможность снять со счёта наличные рубли</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-qr_payment" type="checkbox">
+              <label for="js-checkbox-qr_payment">Возможность совершать операции по QR коду</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-withdraw_qr" type="checkbox">
+              <label for="js-checkbox-withdraw_qr">Возможность снять наличные по QR коду</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-nfc" type="checkbox">
+              <label for="js-checkbox-nfc">Возможность оплаты по NFC</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-for_visually_impaired" type="checkbox">
+              <label for="js-checkbox-for_visually_impaired">	Оборудован для слабовидящих</label>
+            </div>
+            <div class="checkbox">
+              <input class="js-checkbox-for_lm" type="checkbox">
+              <label for="js-checkbox-for_lm">Оборудован для маломобильных граждан</label>
+            </div>
+
+            <div class="checkbox">
+              <label for="js-input-type">Тип баковской точки:</label>
+              <select class="input-type js-input-type">
+                <option value="empty">-</option>
+                <option value="atm">банкомат</option>
+                <option value="office">отделение</option>
+              </select>
+            </div>
+
+            <div class="checkbox">
+              <label for="js-input-workload">Загруженность отделения:</label>
+              <select class="input-workload js-input-workload">
+                <option value="low">Низкая загруженность</option>
+                <option value="medium">Средняя загруженность</option>
+                <option value="high">Высокая загруженность</option>
+              </select>
+            </div>
+            <button class="filter-button js-filter-button">Найти</button>
+          </div>
+        </div>
+
+        <div class="map-zone">
+          <div class="map-container">
+            <div id="map"></div>
+            <img class="close-icon" src="pictures/close.svg">
+          </div>
+          
+          <div class="map-back-1"></div>
+          <div class="map-back-2"></div>
+        </div>
+      </div>
+    </div>    
+
+    <script src="scripts/draw-markers.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.js"></script>
+    <link rel="stylesheet"
+        href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v4.1.1/mapbox-gl-directions.css"
+        type="text/css">
+
+    <script>
+      DrawMarkers('http://127.0.0.1:8000/api/bankslist_coord/?latitude=55.419247&longitude=37.570042&');
+  
+      const setSearch = document.querySelector('.js-search-button');
+      setSearch.addEventListener("click", () => {
+        const serchText = document.querySelector('.js-input').value;
+        if (serchText === null) {
+          DrawMarkers('http://127.0.0.1:8000/api/bankslist_coord/?latitude=55.419247&longitude=37.570042');
+          return;
+        }
+        const url = `http://127.0.0.1:8000/api/search/?search=${serchText}`;
+        fetch(url)
+          .then(response => response.json())
+          .then(data => {console.log(url);
+            DrawMarkers(url)})
+          .catch((error) => console.error('Error:', error));
+      });
+  
+      const setFilter = document.querySelector('.js-filter-button');
+      setFilter.addEventListener("click", () => {
+        let url = 'http://127.0.0.1:8000/api/filteredbanklist_coord/?latitude=55.419247&longitude=37.570042&';
+  
+        let put_rubles = document.querySelector('.js-checkbox-put_rubles').checked;
+        if (put_rubles === true) {
+          url += 'put_rubles=True&';
+        }
+  
+        let withdraw_rubles = document.querySelector('.js-checkbox-withdraw_rubles').checked;
+        if (withdraw_rubles === true) {
+          url += 'withdraw_rubles=True&';
+        }
+  
+        let nfc = document.querySelector('.js-checkbox-nfc').checked;
+        if (nfc === true) {
+          url += 'nfc=True&';
+        }
+  
+        let withdraw_qr = document.querySelector('.js-checkbox-withdraw_qr').checked;
+        if (withdraw_qr === true) {
+          url += 'withdraw_qr=True&';
+        }
+  
+        let qr_payment = document.querySelector('.js-checkbox-qr_payment').checked;
+        if (qr_payment === true) {
+          url += 'qr_payment=True&';
+        }
+  
+        let for_visually_impaired = document.querySelector('.js-checkbox-for_visually_impaired').checked;
+        if (for_visually_impaired === true) {
+          url += 'for_visually_impaired=True&';
+        }
+  
+        let for_lm = document.querySelector('.js-checkbox-for_lm').checked;
+        if (for_lm === true) {
+          url += 'for_lm=True&';
+        }
+
+        let type = document.querySelector('.js-input-type').value;
+        if (type === 'atm') {
+          url += 'type=1&';
+        } else if (type === 'office') {
+          url += 'type=2&';
+        }
+
+        let workload = document.querySelector('.js-input-workload').value;
+        if (workload === 'low') {
+          url += 'workload=3&';
+        } else if (workload === 'medium') {
+          url += 'workload=2&';
+        } else if (workload === 'high') {
+          url += 'workload=1&';
+        }
+  
+        fetch(url)
+          .then(response => response.json())
+          .then(data => DrawMarkers(url))
+          .catch((error) => console.error('Error:', error));
+      });
+  </script>
+  </body>
+</html>

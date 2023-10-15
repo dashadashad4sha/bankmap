@@ -1,0 +1,128 @@
+body {
+    background-color: #878787;
+    margin: 0;
+  }
+@font-face {
+  font-family: Undertale Battle Font;
+  src: url("C:\Users\daria\OneDrive\Desktop\MORE.tech\Undertale-Battle-Font.ttf");
+}
+
+@font-face {
+  font-family: Pixel Anchor-Jack;
+  src: url("C:\Users\daria\OneDrive\Desktop\MORE.tech\pixel-anchor-jack_0.ttf");
+}
+.main-grid {
+    display:grid;
+    grid-template-columns: 3fr 0.01fr 0.99fr;
+}
+
+.header {
+    margin-bottom: 0px;
+}
+
+.filters{
+    margin-top: 0;
+    align-items: start;
+    justify-content: start;
+    background-color: #D9D9D9;
+    margin-left: auto;
+    padding-left: 15px;
+  }
+
+.vertical-line {
+    width: 14px;
+    height: 100%;
+    background-color: #002882;
+  }
+.card-grid {
+    
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+    margin-left: 40px;
+    margin-right: 10px;
+    margin-top: 80px;
+}
+
+.title-2{
+    color: #3B5899;
+    font-size: 20px;
+    font-family: Pixel Anchor-Jack;
+    margin: 80px 0 0px 0px;
+  }
+  .checkbox{
+    color: #3B5899;
+    font-family: Undertale Battle Font;
+    margin: 5px 0 5px 0px;
+  }
+  .checkbox select{
+    background-color: #ffffff;
+    color: #3B5899;
+    font-family: Undertale Battle Font;
+    width: auto;
+    border-radius: 5px;
+  }
+  .filter-button{
+    background-color: #33549b;
+    color: #e5f6ff;
+    font-family: Pixel Anchor-Jack;
+    border-radius: 20px;
+    border-color: #002882;
+    border-style: dashed;
+    padding: 8px 16px;
+    margin: 16px 0;
+    align-self: center;
+    transition: hover 3s active 1s;
+  }
+  .filter-button:hover{
+    background-color: #99a9cd;
+  }
+  .filter-button:active{
+    background-color: #e5f6ff;
+    color: #677eb4;
+    border-color: #e5f6ff;
+  }
+
+.card {
+    width: 300px;
+    height: 500px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+    background-color: #58595B;
+    border-color: #E5F6FF;
+    border-style: solid;
+    border-width: 7px;
+    color: #ccc;
+    font-family: Pixel Anchor-Jack;
+}
+
+.card img {
+    width: 94%;
+    height: auto;
+    padding: 10px 3% 10px 3%;
+}
+
+.card-content {
+    padding: 10px;
+}
+
+.card-content h2 {
+    text-transform: uppercase;
+    margin-top: 0;
+    font-size: 20px;
+    font-family: Undertale Battle Font;
+}
+
+.address {
+    margin: 0;
+}
+
+.time {
+    margin-top: 10px;
+}
+
+.workload {
+    margin-top: 10px;
+}
